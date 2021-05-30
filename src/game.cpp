@@ -94,7 +94,6 @@ GameState SinglePlayLevelGameState::Process(std::set<int>& active_keys, GraphicE
             }
             else
             {
-                active_keys.emplace(GLFW_KEY_ENTER);
                 current_game_level_ = game_levels_.begin();
                 return GameState::start_screen;
             }
