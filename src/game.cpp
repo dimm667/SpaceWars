@@ -1,6 +1,5 @@
 #include "game.h"
 
-
 GameState StartScreenGameState::Process(std::set<int>& active_keys, GraphicEngine& graphic_engine)
 {
     graphic_engine.Draw({&background_, &text_render_});
@@ -37,7 +36,7 @@ SinglePlayLevelGameState::SinglePlayLevelGameState(ObjectsDrawer& objects_drawer
 
 GameState SinglePlayLevelGameState::Process(std::set<int>& active_keys, GraphicEngine& graphic_engine)
 {
-    float currentFrame = glfwGetTime();
+    const auto currentFrame = glfwGetTime();
     const auto deltaTime = currentFrame - lastFrame_;
     lastFrame_ = currentFrame;
 
@@ -155,7 +154,7 @@ MultiPlayLevelGameState::MultiPlayLevelGameState(ObjectsDrawer& objects_drawer) 
 
 GameState MultiPlayLevelGameState::Process(std::set<int>& active_keys, GraphicEngine& graphic_engine)
 {
-    float currentFrame = glfwGetTime();
+    const auto currentFrame = glfwGetTime();
     const auto deltaTime = currentFrame - lastFrame_;
     lastFrame_ = currentFrame;
 

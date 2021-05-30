@@ -28,8 +28,8 @@ class UniformObject : private UniformObjectMonitor
 public:
     UniformObject()
     {
-        glGenBuffers(1, &ubo);
-        glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+        glGenBuffers(1, &ubo_);
+        glBindBuffer(GL_UNIFORM_BUFFER, ubo_);
         glBufferData(GL_UNIFORM_BUFFER, sizeof(T), NULL, GL_DYNAMIC_DRAW);
         glBindBuffer(GL_UNIFORM_BUFFER, 0);
     }
@@ -39,25 +39,25 @@ public:
         unsigned int ub_index = glGetUniformBlockIndex(shader.getId(), name.c_str());
         if(ub_index == GL_INVALID_INDEX)
         {
-            throw std::runtime_error(std::string("ERROR::UBO::BINDING\n") + std::string("Can't find specidied uniform object in the shader programm.\n"));
+            throw std::runtime_error(std::string("ERROR::ubo_::BINDING\n") + std::string("Can't find specidied uniform object in the shader programm.\n"));
         }
         else if(glGetError() == GL_INVALID_OPERATION)
         {
-            throw std::runtime_error(std::string("ERROR::UBO::BINDING\n") + std::string("Can't find specidied shader programm.\n"));
+            throw std::runtime_error(std::string("ERROR::ubo_::BINDING\n") + std::string("Can't find specidied shader programm.\n"));
         }
 
         glUniformBlockBinding(shader.getId(), ub_index, own_binding_point_);
         if(glGetError() == GL_INVALID_VALUE)
         {
-            glDeleteBuffers(1, &ubo);
-            throw std::runtime_error(std::string("ERROR::UBO::BINDING\n") + std::string("Can't bind.\n"));
+            glDeleteBuffers(1, &ubo_);
+            throw std::runtime_error(std::string("ERROR::ubo_::BINDING\n") + std::string("Can't bind.\n"));
         }
 
-        glBindBufferBase(GL_UNIFORM_BUFFER, own_binding_point_, ubo);
+        glBindBufferBase(GL_UNIFORM_BUFFER, own_binding_point_, ubo_);
         if(glGetError() == GL_INVALID_VALUE || glGetError() == GL_INVALID_ENUM)
         {
-            glDeleteBuffers(1, &ubo);
-            throw std::runtime_error(std::string("ERROR::UBO::BINDING\n") + std::string("Can't bind.\n"));
+            glDeleteBuffers(1, &ubo_);
+            throw std::runtime_error(std::string("ERROR::ubo_::BINDING\n") + std::string("Can't bind.\n"));
         }
     }
 
@@ -67,8 +67,8 @@ public:
         GLint bindedBuffer;
         glGetIntegerv(GL_UNIFORM_BUFFER_BINDING, &bindedBuffer);
 
-        glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(T), &ref_data);
+        glBindBuffer(GL_UNIFORM_BUFFER, ubo_);
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(T), &ref_data_);
 
         // bind buffer back
         glBindBuffer(GL_UNIFORM_BUFFER, bindedBuffer);
@@ -79,23 +79,23 @@ public:
     {
     public:
         UniformProxy(UniformObject<T> & outer, unsigned int offset, unsigned int size) :
-            ref_outer(outer), offset_(offset), size_{size}
+            ref_outer(outer), offset_(offset), size_{ size }, value_{}
         {}
 
         Q & operator=(const Q & other)
         {
-            value = other;
-            ref_outer.template updatePartial<Q>(value, offset_, size_);
-            return value;
+            value_ = other;
+            ref_outer.template updatePartial<Q>(value_, offset_, size_);
+            return value_;
         }
 
         operator Q()
         {
-            return value;
+            return value_;
         }
 
     private:
-        Q value;
+        Q value_;
         UniformObject<T> & ref_outer;
         const unsigned int offset_;
         const unsigned int size_;
@@ -116,14 +116,14 @@ private:
         GLint bindedBuffer;
         glGetIntegerv(GL_UNIFORM_BUFFER_BINDING, &bindedBuffer);
 
-        glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+        glBindBuffer(GL_UNIFORM_BUFFER, ubo_);
         glBufferSubData(GL_UNIFORM_BUFFER, offset, size, &value);
 
         // bind buffer back
         glBindBuffer(GL_UNIFORM_BUFFER, bindedBuffer);
     }
-    T ref_data;
-    unsigned int ubo;
+    T ref_data_{};
+    unsigned int ubo_{};
 };
 
 #endif // UNIFORMOBJECT_H

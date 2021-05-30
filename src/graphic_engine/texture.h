@@ -77,9 +77,9 @@ struct TexImageFormat
 
 static const TexImageFormat defaultTexImageFormat
 {
-    .internalFormat = GL_DEPTH_COMPONENT,
-    .pixelFormat = GL_DEPTH_COMPONENT,
-    .pixelType = GL_FLOAT
+    GL_DEPTH_COMPONENT,
+    GL_DEPTH_COMPONENT,
+    GL_FLOAT
 };
 
 ///

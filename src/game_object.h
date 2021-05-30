@@ -145,7 +145,7 @@ class SpaceShip : public PhysicObjectWithType
         SpaceShip() = default;
         SpaceShip(const SpaceShipType type, Point position, const double heading, double width, double length) :
             PhysicObjectWithType({GeneralType::space_ship, type}, position, heading, {}, {}),
-            width_{width}, length_{length_}, collision_radius_{std::sqrt(width_ * width_ +  length_ * length_)}
+            width_{width}, length_{length}, collision_radius_{std::sqrt(width_ * width_ +  length_ * length_)}
         {}
 
         std::optional<Rocket> Shoot()

@@ -1,6 +1,7 @@
 #ifndef IMAGELOADER_H
 #define IMAGELOADER_H
 #include <memory>
+#include <string>
 
 
 class ImageLoader
@@ -23,8 +24,8 @@ public:
     ImageLoader(const std::string & pathToFile, bool flip = true);
     ~ImageLoader();
     float getPixel(PixelDataType type, unsigned int x, unsigned int y);
-    float getWidth() const {return width;}
-    float getHeight() const {return height;}
+    int getWidth() const {return width;}
+    int getHeight() const {return height;}
     ImageFormat getImageFormat() { return format;}
     const TDataPointer getData() {return data;}
 

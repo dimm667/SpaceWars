@@ -78,7 +78,7 @@ private:
     TextStream& battle_result_test_{text_render_.GetRenderTextStream(800.0f, 700.0f, 1.5f, glm::vec3(0.5, 0.8f, 0.2f))};
     TextStream& next_text_{text_render_.GetRenderTextStream(840.0f, 50.0f, 0.5f, glm::vec3(0.0, 0.8f, 0.0f))};
 
-    float lastFrame_{};
+    double lastFrame_{};
     std::unique_ptr<Player> player_{};
     std::list<std::unique_ptr<GameLevelBase>> game_levels_{};
     std::list<std::unique_ptr<GameLevelBase>>::iterator current_game_level_{};
@@ -108,7 +108,7 @@ private:
     TextStream& battle_result_test_{text_render_.GetRenderTextStream(600.0f, 700.0f, 1.5f, glm::vec3(0.5, 0.8f, 0.2f))};
     TextStream& next_text_{text_render_.GetRenderTextStream(840.0f, 50.0f, 0.5f, glm::vec3(0.0, 0.8f, 0.0f))};
 
-    float lastFrame_{};
+    double lastFrame_{};
     std::unique_ptr<Player> player_1{};
     std::unique_ptr<Player> player_2{};
     std::unique_ptr<GameLevelBase> game_level_{};

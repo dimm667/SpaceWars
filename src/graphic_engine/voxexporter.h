@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <iostream>
 #include <vector>
 #include <array>
 #include <stdexcept>
@@ -31,28 +30,28 @@ enum class chunkType
 
 struct VOX
 {
-    chunkName   name;
-    int         version;
+    chunkName   name{};
+    int         version{};
 };
 
 
 struct ChunkInfo
 {
-    chunkName   name;
-    int         contentSize;
-    int         childrensSize;
+    chunkName   name{};
+    int         contentSize{};
+    int         childrensSize{};
 };
 
 struct packContent
 {
-    int         numModels;
+    int         numModels{};
 };
 
 struct Size
 {
-    unsigned int         x;
-    unsigned int         y;
-    unsigned int         z;      // gravity direction
+    unsigned int         x{};
+    unsigned int         y{};
+    unsigned int         z{};      // gravity direction
 };
 
 
@@ -65,23 +64,23 @@ union Voxel
         unsigned char   y;
         unsigned char   z;      // gravity direction
         unsigned char   colorIdx;
-    } component;
+    } component{};
 };
 
 struct Voxels
 {
-    int                 num_voxels;
-    std::vector<Voxel>  voxel;
+    std::size_t num_voxels{};
+    std::vector<Voxel> voxel{};
 };
 
 class Model
 {
 public:
-    unsigned int GetNumVoxels() const {return voxels_.num_voxels;}
+    std::size_t GetNumVoxels() const {return voxels_.num_voxels;}
     Voxel GetVoxel(unsigned int idx) const {return voxels_.voxel[idx];}
 
-    Size size_;
-    Voxels voxels_;
+    Size size_{};
+    Voxels voxels_{};
 };
 
 union Color
@@ -93,12 +92,12 @@ union Color
         unsigned char g;
         unsigned char b;
         unsigned char a;
-    } component;
+    } component{};
 };
 
 struct Palette
 {
-    std::array<Color, 256> color;
+    std::array<Color, 256> color{};
 };
 
 enum class MaterialType
@@ -122,15 +121,15 @@ union MaterialProperty
         unsigned int power          : 1;
         unsigned int glow           : 1;
         unsigned int isTotalPower   : 1;
-    } component;
+    } component{};
 };
 
 struct Material
 {
-    MaterialType type;
-    float weight;
-    MaterialProperty property;
-    std::vector<float> value;
+    MaterialType type{};
+    float weight{};
+    MaterialProperty property{};
+    std::vector<float> value{};
 };
 
 
@@ -144,8 +143,8 @@ public:
     Color getColor(unsigned int index) {return palette_.color[index-1];}
 
 private:
-    std::vector<Model> models_;
-    Palette palette_;
+    std::vector<Model> models_{};
+    Palette palette_{};
 };
 
 }

@@ -69,7 +69,6 @@ VoxelArray::VoxelArray(unsigned int arraySize) :
 
     // voxel position
     // initialize voxel array
-    std::srand(std::time(nullptr));
     for(unsigned int idx = 0; idx < size; ++idx)
         voxel.push_back({glm::vec3(0.0f),
                          glm::vec3(0.0f)});

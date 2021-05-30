@@ -78,7 +78,7 @@ TextureImage::TextureImage(const std::string & pathToFile) :
 
     ImageLoader image(pathToFile);
 
-    GLenum format;
+    GLenum format{};
     switch (image.getImageFormat())
     {
         case ImageLoader::ImageFormat::RED: format = GL_RED; break;
@@ -105,7 +105,7 @@ TextureCubeMap::TextureCubeMap(const std::vector<std::string> & pathsToFiles) :
     for(auto && pathToFile : pathsToFiles)
     {
         ImageLoader image(pathToFile, false);
-        GLenum format;
+        GLenum format{GL_RGBA};
         switch (image.getImageFormat())
         {
             case ImageLoader::ImageFormat::RED: format = GL_RED; break;
